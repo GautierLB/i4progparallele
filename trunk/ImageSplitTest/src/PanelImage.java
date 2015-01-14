@@ -12,8 +12,9 @@ public class PanelImage extends JPanel{
 	 */
 	private static final long serialVersionUID = 1L;
 	Image image;
-	PanelImage(String path) throws IOException{
-		  image = javax.imageio.ImageIO.read (new File(path));
+	PanelImage(Image img) throws IOException{
+		 // image = javax.imageio.ImageIO.read (new File(img));
+		this.image=img;
 		  repaint();
 	}
 	public void paintComponent(Graphics g) {

@@ -23,7 +23,8 @@ public class Fenetre extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public JLabel img = new JLabel();
+	public PanelImage img;
+
 	private Image image;
 	Fenetre(){
 		final JPanel contentPane;
@@ -36,35 +37,40 @@ public class Fenetre extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		JButton btn_upload = new JButton("Upload");
-		
+        JButton btn_launch = new JButton("Lancer");
+        btn_launch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Animation_launched(evt);
+            }
+        });
 		btn_upload.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent arg0)
 				{	
 					
 					String load=upload();
-					if(load!="aucun fichier selectionné"){
-						PanelImage PanelImage = null;
+					if(load!="aucun fichier selectionnï¿½"){
+						img = null;
 						try {
-							PanelImage = new PanelImage(load);
+                            img = new PanelImage(load);
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						PanelImage.setBounds(100, 10, 1000 , 650);
-						PanelImage.setLayout(null);
-						PanelImage.setBackground(Color.WHITE);
-						PanelImage.setBorder(BorderFactory.createLineBorder(Color.black));
-
-						contentPane.add(PanelImage);
+                        img.setBounds(100, 10, 1000 , 650);
+                        img.setLayout(null);
+                        img.setBackground(Color.WHITE);
+                        img.setBorder(BorderFactory.createLineBorder(Color.black));
+						contentPane.add(img);
 						repaint();
 				}
 				}
 			});	
-		
-		 
+
 		btn_upload.setBounds(50,670, 125, 30);
-		 contentPane.add(btn_upload);
+        btn_launch.setBounds(100,670, 125, 30);
+		contentPane.add(btn_upload);
+        contentPane.add(btn_launch);
 	}
 	private String upload() {
         JFileChooser chooser = new JFileChooser();
@@ -77,10 +83,17 @@ public class Fenetre extends JFrame {
             System.out.println("Chargement du fichier : " + ficChoisi.getAbsolutePath());
    
             }
-        if (chemin == null)
-        	return "aucun fichier selectionné";
-        else
-        	return chemin;
+        if (chemin == null) {
+            return "aucun fichier selectionnï¿½";
+        }
+        else {
+            return chemin;
+        }
 	}
+
+    private void Animation_launched (java.awt.event.MouseEvent evt){
+        moveThread move = new moveThread((JPanel)img);
+        move.start();
+    }
 
 }

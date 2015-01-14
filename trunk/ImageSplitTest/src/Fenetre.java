@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.*;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -25,9 +26,11 @@ public class Fenetre extends JFrame {
 	private static final long serialVersionUID = 1L;
 	public PanelImage img;
 
+    private ArrayList<moveThread> moveThreads;
 	private Image image;
 	Fenetre(){
 		final JPanel contentPane;
+        moveThreads = new ArrayList<moveThread>();
 		setTitle("Image"); 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		setBounds(0, 0, 1200, 750); 
@@ -43,6 +46,14 @@ public class Fenetre extends JFrame {
                 Animation_launched(evt);
             }
         });
+
+        JButton btn_pause = new JButton("Pause");
+        btn_pause.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Animation_paused(evt);
+            }
+        });
+
 		btn_upload.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent arg0)
@@ -69,8 +80,10 @@ public class Fenetre extends JFrame {
 
 		btn_upload.setBounds(50,670, 125, 30);
         btn_launch.setBounds(400,670, 125, 30);
+        btn_pause.setBounds(700,670, 125, 30);
 		contentPane.add(btn_upload);
         contentPane.add(btn_launch);
+        contentPane.add(btn_pause);
 	}
 	private String upload() {
         JFileChooser chooser = new JFileChooser();
@@ -93,7 +106,15 @@ public class Fenetre extends JFrame {
 
     private void Animation_launched (java.awt.event.MouseEvent evt){
         moveThread move = new moveThread((JPanel)img);
+        moveThreads.add(move);
         move.start();
+    }
+
+    private void Animation_paused (java.awt.event.MouseEvent evt){
+        for( moveThread thread : moveThreads){
+            thread.interrupt();
+        }
+
     }
 
 }

@@ -7,20 +7,26 @@ import java.awt.*;
 public class moveThread extends Thread{
 
     private JPanel target;
+    private boolean interrupted;
 
     public moveThread(JPanel _target) {
         this.target = _target;
+        this.interrupted = false;
     }
 
     @Override
     public synchronized void run() {
-        for (int i = 1; i <= 100; i++) {
+        while (!this.interrupted) {
             try {
                 this.target.setLocation(this.target.getX(), (this.target.getY()+1));
-                this.sleep(1000);
+                this.sleep(100);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void interrupt(){
+        this.interrupted = true;
     }
 }

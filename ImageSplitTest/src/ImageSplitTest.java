@@ -4,9 +4,12 @@ import java.io.*;
 import java.awt.*;  
   
 public class ImageSplitTest {  
-    public static void main(String[] args) throws IOException {  
+	public PanelImage image1;
+	public PanelImage image2;
+	public PanelImage image3;
+    public ImageSplitTest(String path) throws IOException {  
   
-        File file = new File("C:/Users/Fran/Pictures/cantin.png"); // I have bear.jpg in my working directory  
+        File file = new File(path); // I have bear.jpg in my working directory  
         FileInputStream fis = new FileInputStream(file);  
         BufferedImage image = ImageIO.read(fis); //reading the image file  
   

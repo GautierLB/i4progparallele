@@ -68,7 +68,7 @@ public class Fenetre extends JFrame {
 			});	
 
 		btn_upload.setBounds(50,670, 125, 30);
-        btn_launch.setBounds(100,670, 125, 30);
+        btn_launch.setBounds(400,670, 125, 30);
 		contentPane.add(btn_upload);
         contentPane.add(btn_launch);
 	}

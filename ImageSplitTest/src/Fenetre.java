@@ -24,12 +24,13 @@ public class Fenetre extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public PanelImage img;
-
+	
+	public ImageSplit imgsplit = null;
     private ArrayList<moveThread> moveThreads;
 	private Image image;
 	Fenetre(){
 		final JPanel contentPane;
+		final JPanel affichage;
         moveThreads = new ArrayList<moveThread>();
 		setTitle("Image"); 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
@@ -39,6 +40,13 @@ public class Fenetre extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		affichage = new JPanel();
+		//affichage.setBorder(new EmptyBorder(5, 5, 5, 5));
+		affichage.setBounds(100, 10, 1000 , 650);
+		
+		//affichage.setBorder(BorderFactory.createLineBorder(Color.black));
+		affichage.setLayout(null);
+		contentPane.add(affichage);
 		JButton btn_upload = new JButton("Upload");
         JButton btn_launch = new JButton("Lancer");
         btn_launch.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -60,19 +68,19 @@ public class Fenetre extends JFrame {
 				{	
 					
 					String load=upload();
-					if(load!="aucun fichier selectionnï¿½"){
-						img = null;
+					if(load!="aucun fichier selectionné"){
+						if(imgsplit!=null){
+							for(int i=0;i<imgsplit.images.length;i++){
+								contentPane.remove(imgsplit.images[i]);
+							}
+						}
 						try {
-                            img = new PanelImage(load);
+							imgsplit = new ImageSplit(load,affichage);
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-                        img.setBounds(100, 10, 1000 , 650);
-                        img.setLayout(null);
-                        img.setBackground(Color.WHITE);
-                        img.setBorder(BorderFactory.createLineBorder(Color.black));
-						contentPane.add(img);
+                     
 						repaint();
 				}
 				}
@@ -81,9 +89,9 @@ public class Fenetre extends JFrame {
 		btn_upload.setBounds(50,670, 125, 30);
         btn_launch.setBounds(400,670, 125, 30);
         btn_pause.setBounds(700,670, 125, 30);
-		contentPane.add(btn_upload);
-        contentPane.add(btn_launch);
-        contentPane.add(btn_pause);
+		contentPane.add(btn_upload,0);
+        contentPane.add(btn_launch,0);
+        contentPane.add(btn_pause,0);
 	}
 	private String upload() {
         JFileChooser chooser = new JFileChooser();
@@ -97,7 +105,7 @@ public class Fenetre extends JFrame {
    
             }
         if (chemin == null) {
-            return "aucun fichier selectionnï¿½";
+            return "aucun fichier selectionn?";
         }
         else {
             return chemin;
@@ -105,9 +113,11 @@ public class Fenetre extends JFrame {
 	}
 
     private void Animation_launched (java.awt.event.MouseEvent evt){
-        moveThread move = new moveThread((JPanel)img);
+    	for(int i=0;i<imgsplit.images.length;i++){
+        moveThread move = new moveThread((JPanel)imgsplit.images[i]);
         moveThreads.add(move);
         move.start();
+    	}
     }
 
     private void Animation_paused (java.awt.event.MouseEvent evt){

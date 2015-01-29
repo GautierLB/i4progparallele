@@ -27,7 +27,7 @@ public class Fenetre extends JFrame {
 	
 	public ImageSplit imgsplit = null;
     private ArrayList<moveThread> moveThreads;
-	private Image image;
+
 	Fenetre(){
 		final JPanel contentPane;
 		final JPanel affichage;
@@ -51,6 +51,7 @@ public class Fenetre extends JFrame {
         JButton btn_launch = new JButton("Lancer");
         btn_launch.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
+            	if(imgsplit!=null){
             	if(moveThreads.size()==0){
             		Animation_launched(evt);
             	}
@@ -59,6 +60,7 @@ public class Fenetre extends JFrame {
             			moveThreads.get(i).reprise();
             		}
             	}
+            }
             }
         });
 

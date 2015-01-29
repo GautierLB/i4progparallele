@@ -46,7 +46,7 @@ public class moveThread extends Thread{
 
                 this.sleep(10);
             } catch (Exception e) {
-                e.printStackTrace();
+               
             }
         }
     }

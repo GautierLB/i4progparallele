@@ -51,7 +51,14 @@ public class Fenetre extends JFrame {
         JButton btn_launch = new JButton("Lancer");
         btn_launch.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Animation_launched(evt);
+            	if(moveThreads.size()==0){
+            		Animation_launched(evt);
+            	}
+            	else if(moveThreads.get(0).isInterrupted()==false){
+            		for(int i=0;i<moveThreads.size();i++){
+            			moveThreads.get(i).reprise();
+            		}
+            	}
             }
         });
 
@@ -113,11 +120,26 @@ public class Fenetre extends JFrame {
 	}
 
     private void Animation_launched (java.awt.event.MouseEvent evt){
-    	for(int i=0;i<imgsplit.images.length;i++){
-        moveThread move = new moveThread((JPanel)imgsplit.images[i]);
-        moveThreads.add(move);
+    	boolean direction=true;
+    	for(int i=0;i<3;i++){
+    		moveThread move;
+    		
+    		if((direction==true)){
+    			move = new moveThread((JPanel)imgsplit.images[i],(JPanel)imgsplit.images[i+3],true);
+    			direction=false;
+    		}
+    		else{
+    			move = new moveThread((JPanel)imgsplit.images[i],(JPanel)imgsplit.images[i+3],false);
+    			direction=true;
+    		}
+    		if(i==2){
+    			direction=true;
+    		}
+        
+		moveThreads.add(move);
         move.start();
     	}
+    	System.out.println();
     }
 
     private void Animation_paused (java.awt.event.MouseEvent evt){

@@ -9,7 +9,7 @@ import java.awt.*;
 public class ImageSplit {  
 
 	public JPanel affichage;
-	public PanelImage images[] = new PanelImage[3];
+	public PanelImage images[] = new PanelImage[6];
     public ImageSplit(String path,JPanel affichage) throws IOException {  
     	this.affichage=affichage;
         File file = new File(path); // I have bear.jpg in my working directory  
@@ -36,8 +36,11 @@ public class ImageSplit {
             }  
         }  
         System.out.println("Splitting done");  
-  
-        //writing mini images into image files  
+      
+        //writing mini images into image files 
+        
+      
+        
         for (int i = 0; i < imgs.length; i++) {  
         	
         	PanelImage imagetemp =new PanelImage(imgs[i]); 
@@ -49,7 +52,21 @@ public class ImageSplit {
         	affichage.add(imagetemp,-1);
         	images[i]=imagetemp;
         	
+        	
         }  
+        for (int i = 0; i < imgs.length; i++) {  
+        	
+        	PanelImage imagetemp =new PanelImage(imgs[i]); 
+        	imagetemp.setBounds(i*333, -imgs[i].getHeight(), 333 , 650);
+        	imagetemp.setLayout(null);
+        	imagetemp.setBackground(Color.WHITE);
+        	imagetemp.setBorder(BorderFactory.createLineBorder(Color.black));
+
+        	affichage.add(imagetemp,-1);
+        	images[i+3]=imagetemp;
+        	
+        	
+        }
         /*PanelImage imagetemp =new PanelImage(image); 
     	imagetemp.setBounds(100, 10, 1000 , 650);
     	imagetemp.setLayout(null);

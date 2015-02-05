@@ -1,7 +1,5 @@
 import javax.swing.*;
 
-import java.awt.*;
-
 /**
  * Created by Gautier on 14/01/2015.
  */

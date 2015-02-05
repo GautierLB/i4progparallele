@@ -1,9 +1,6 @@
-import java.awt.Graphics;
-import java.awt.Image;
-import java.io.File;
+import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
-
-import javax.swing.JPanel;
 
 
 public class PanelImage extends JPanel{

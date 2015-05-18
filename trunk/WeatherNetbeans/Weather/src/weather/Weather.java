@@ -6,18 +6,6 @@
 
 package weather;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.json.* ;
-
-
 
 /**
  *
@@ -29,29 +17,29 @@ public class Weather {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        try {
-            String uri ="http://api.wunderground.com/api/5ffe04dce1671bdc/conditions/q/CA/San_Francisco.json";
-            URL url = new URL(uri);
-            HttpURLConnection connection =(HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            connection.setRequestProperty("Accept", "application/xml");
-            InputStream json = connection.getInputStream();
-            BufferedReader streamReader = new BufferedReader(new InputStreamReader(json, "UTF-8"));
-            StringBuilder responseStrBuilder = new StringBuilder();
-            String inputStr;
-            while ((inputStr = streamReader.readLine()) != null)
-            {
-                responseStrBuilder.append(inputStr);
-            }
-            JSONObject obj = new JSONObject(responseStrBuilder.toString());
-            System.out.println(obj.toString());
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    
+        MainPanel frame = new MainPanel();
+        frame.setVisible(true);
+        
+        new WeatherThread("http://api.wunderground.com/api/5ffe04dce1671bdc/conditions/q/FR/Paris.json", 
+                frame.ImageParis, 
+                frame.InfosParis).start();
+        new WeatherThread("http://api.wunderground.com/api/5ffe04dce1671bdc/conditions/q/zmw:00000.1.03772.json", 
+                frame.ImageLondres, 
+                frame.InfosLondres).start();
+       new WeatherThread("http://api.wunderground.com/api/5ffe04dce1671bdc/conditions/q/FL/Miami.json", 
+                frame.ImageMiami, 
+                frame.InfosMiami).start();
+        new WeatherThread("http://api.wunderground.com/api/5ffe04dce1671bdc/conditions/q/AU/Sydney.json", 
+                frame.ImageSydney, 
+                frame.InfosSydney).start();
+        new WeatherThread("http://api.wunderground.com/api/5ffe04dce1671bdc/conditions/q/zmw:00000.1.54511.json", 
+                frame.ImagePekin, 
+                frame.InfosPekin).start();
+        new WeatherThread("http://api.wunderground.com/api/5ffe04dce1671bdc/conditions/q/BR/Rio.json", 
+                frame.ImageRio, 
+                frame.InfosRio).start();
+        
+        
     }
     
 }

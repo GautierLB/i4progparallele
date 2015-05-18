@@ -29,14 +29,14 @@ public class moveThread extends Thread {
                         }
                         if (this.target2.getY() > this.target2.getHeight()) {
                             this.target2.setLocation(this.target2.getX(), -this.target2.getHeight());
+                        } else {
+                            this.target.setLocation(this.target.getX(), (this.target.getY() - 1));
+                            this.target2.setLocation(this.target2.getX(), (this.target2.getY() - 1));
+                            if (this.target.getY() < -this.target.getHeight()) {
+                                this.target.setLocation(this.target.getX(), this.target.getHeight());
+                            }
                         }
-                    } else {
-                        this.target.setLocation(this.target.getX(), (this.target.getY() - 1));
-                        this.target2.setLocation(this.target2.getX(), (this.target2.getY() - 1));
-                        if (this.target.getY() < -this.target.getHeight()) {
-                            this.target.setLocation(this.target.getX(), this.target.getHeight());
-                        }
-                        if (this.target2.getY() < -this.target2.getHeight()) {
+                      if (this.target2.getY() < -this.target2.getHeight()) {
                             this.target2.setLocation(this.target2.getX(), this.target2.getHeight());
                         }
                     }
